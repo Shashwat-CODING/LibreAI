@@ -4,6 +4,8 @@
 
 Developed by **CodErbauer**, LibreAI connects directly to Cloudflare's serverless AI infrastructure—giving you instant access to frontier LLMs, multimodal vision models, and dedicated image generation models with zero telemetry and 100% local data storage.
 
+[![GitHub Release](https://img.shields.io/github/v/release/Shashwat-CODING/LibreAI?style=for-the-badge&logo=github&color=D97757&logoColor=white&label=Download%20v1.0)](https://github.com/Shashwat-CODING/LibreAI/releases/tag/v1.0)
+
 ---
 
 ## ✨ Features
@@ -53,10 +55,12 @@ Watch the step-by-step video guide to learn how to configure Cloudflare Workers 
 
 ### Installation & Run
 
+> 📲 **Want a pre-built APK?** → [Download from GitHub Releases](https://github.com/Shashwat-CODING/LibreAI/releases/tag/v1.0)
+
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/libreai.git
-   cd libreai
+   git clone https://github.com/Shashwat-CODING/LibreAI.git
+   cd LibreAI
    ```
 
 2. **Install Dependencies**:
