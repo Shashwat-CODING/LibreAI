@@ -13,6 +13,7 @@ import 'chat_models.dart';
 import 'history_drawer_modal.dart';
 import 'image_viewer_modal.dart';
 import 'models.dart';
+import 'onboarding_screen.dart';
 import 'settings_modal.dart';
 import 'theme.dart';
 import 'typewriter_model_title.dart';
@@ -72,9 +73,9 @@ class _ChatScreenState extends State<ChatScreen> {
       }
 
       final themeModeStr = prefs.getString('app_theme_mode') ?? 'auto';
-      if (themeModeStr == 'light') {
+      if (themeModeStr == 'light' || themeModeStr == 'AppThemeMode.light') {
         _themeMode = AppThemeMode.light;
-      } else if (themeModeStr == 'dark') {
+      } else if (themeModeStr == 'dark' || themeModeStr == 'AppThemeMode.dark') {
         _themeMode = AppThemeMode.dark;
       } else {
         _themeMode = AppThemeMode.auto;
@@ -358,6 +359,27 @@ class _ChatScreenState extends State<ChatScreen> {
           _themeMode = AppThemeMode.auto;
         });
         _saveSettings();
+      },
+      onResetAllDataAndOnboard: () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => OnboardingScreen(
+                onOnboardingComplete: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    CupertinoPageRoute(builder: (context) => const ChatScreen()),
+                    (route) => false,
+                  );
+                },
+              ),
+            ),
+            (route) => false,
+          );
+        }
       },
     );
   }

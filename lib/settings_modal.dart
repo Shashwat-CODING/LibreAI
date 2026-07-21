@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'chat_models.dart';
 import 'models.dart';
 import 'theme.dart';
@@ -22,6 +23,7 @@ class SettingsModal extends StatefulWidget {
     required AppThemeMode themeMode,
   }) onSave;
   final VoidCallback onRestoreDefaults;
+  final VoidCallback onResetAllDataAndOnboard;
 
   const SettingsModal({
     super.key,
@@ -33,6 +35,7 @@ class SettingsModal extends StatefulWidget {
     required this.themeMode,
     required this.onSave,
     required this.onRestoreDefaults,
+    required this.onResetAllDataAndOnboard,
   });
 
   static void show({
@@ -52,6 +55,7 @@ class SettingsModal extends StatefulWidget {
       required AppThemeMode themeMode,
     }) onSave,
     required VoidCallback onRestoreDefaults,
+    required VoidCallback onResetAllDataAndOnboard,
   }) {
     showCupertinoModalPopup(
       context: context,
@@ -64,6 +68,7 @@ class SettingsModal extends StatefulWidget {
         themeMode: themeMode,
         onSave: onSave,
         onRestoreDefaults: onRestoreDefaults,
+        onResetAllDataAndOnboard: onResetAllDataAndOnboard,
       ),
     );
   }
@@ -234,8 +239,36 @@ class _SettingsModalState extends State<SettingsModal> {
 
                         const SizedBox(height: 20),
                         // Cloudflare Credentials
-                        Text('3. CLOUDFLARE CREDENTIALS (OPTIONAL)',
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: colors.monoWhite)),
+                        Row(
+                          children: [
+                            Text('3. CLOUDFLARE CREDENTIALS (OPTIONAL)',
+                                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: colors.monoWhite)),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                final url = Uri.parse('https://www.youtube.com/watch?v=k1oGhb50qA4');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: colors.accentClay.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: colors.accentClay.withValues(alpha: 0.5)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(CupertinoIcons.play_circle_fill, size: 12, color: colors.accentClay),
+                                    const SizedBox(width: 4),
+                                    Text('Video Guide', style: TextStyle(fontSize: 10, color: colors.accentClay, fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 8),
                         CupertinoTextField(
                           controller: _accountController,
@@ -361,6 +394,65 @@ class _SettingsModalState extends State<SettingsModal> {
                                     fontWeight: FontWeight.bold,
                                     color: CupertinoColors.systemRed,
                                   ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+
+                        // Clear Cache & Reset All Data Button
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              showCupertinoDialog(
+                                context: context,
+                                builder: (dialogContext) => CupertinoAlertDialog(
+                                  title: const Text('Clear Cache & Reset App Data?'),
+                                  content: const Text(
+                                    'This will delete all saved API keys, chat history threads, system prompts, and custom settings. You will be taken back to the Onboarding Screen.',
+                                  ),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: const Text('Cancel'),
+                                      onPressed: () => Navigator.pop(dialogContext),
+                                    ),
+                                    CupertinoDialogAction(
+                                      isDestructiveAction: true,
+                                      child: const Text('Clear Everything'),
+                                      onPressed: () {
+                                        Navigator.pop(dialogContext);
+                                        Navigator.pop(context);
+                                        widget.onResetAllDataAndOnboard();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: BoxDecoration(
+                                color: CupertinoColors.systemRed.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(22),
+                                border: Border.all(color: CupertinoColors.systemRed.withValues(alpha: 0.5)),
+                              ),
+                              child: const Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(CupertinoIcons.trash_fill, size: 16, color: CupertinoColors.systemRed),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      'Clear Cache & Reset All App Data',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: CupertinoColors.systemRed,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
