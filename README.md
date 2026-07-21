@@ -32,19 +32,9 @@ Developed by **CodErbauer**, LibreAI connects directly to Cloudflare's serverles
 
 Watch the step-by-step video guide to learn how to configure Cloudflare Workers AI credentials with LibreAI:
 
-<div relative width="100%" height="0" style="padding-bottom: 56.25%;">
-  <iframe 
-    src="https://www.youtube.com/embed/k1oGhb50qA4" 
-    title="LibreAI Setup Guide" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin" 
-    allowfullscreen
-    style="width: 100%; height: 350px; border-radius: 12px;">
-  </iframe>
-</div>
+[![LibreAI Setup Guide](https://img.youtube.com/vi/k1oGhb50qA4/maxresdefault.jpg)](https://www.youtube.com/watch?v=k1oGhb50qA4)
 
-> 🔗 **Direct Link**: [Watch LibreAI Setup Guide on YouTube](https://www.youtube.com/watch?v=k1oGhb50qA4)
+> 🔗 **Click the thumbnail above or use the direct link**: [Watch LibreAI Setup Guide on YouTube](https://www.youtube.com/watch?v=k1oGhb50qA4)
 
 ---
 
